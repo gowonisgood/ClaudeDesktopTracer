@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\GIT\\config_ProcT\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{83A726E9-6455-4074-83DA-75CB88586091}|config_ProcT\\config_ProcT.csproj|d:\\git\\config_proct\\config_proct\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{83A726E9-6455-4074-83DA-75CB88586091}|config_ProcT\\config_ProcT.csproj|solutionrelative:config_proct\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\GIT\\config_ProcT\\config_ProcT\\Program.cs",
+              "RelativeDocumentMoniker": "config_ProcT\\Program.cs",
+              "ToolTip": "D:\\GIT\\config_ProcT\\config_ProcT\\Program.cs",
+              "RelativeToolTip": "config_ProcT\\Program.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAwGIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T04:06:11.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

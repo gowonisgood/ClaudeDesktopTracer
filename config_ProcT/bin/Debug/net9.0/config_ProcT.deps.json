@@ -1,0 +1,799 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "config_ProcT/1.0.0": {
+        "dependencies": {
+          "Microsoft.Diagnostics.Tracing.TraceEvent": "3.1.24",
+          "Microsoft.Windows.EventTracing.Processing.All": "1.12.10",
+          "System.Management": "9.0.9"
+        },
+        "runtime": {
+          "config_ProcT.dll": {}
+        }
+      },
+      "Microsoft.Diagnostics.NETCore.Client/0.2.510501": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Diagnostics.NETCore.Client.dll": {
+            "assemblyVersion": "0.2.10.10501",
+            "fileVersion": "0.2.10.10501"
+          }
+        }
+      },
+      "Microsoft.Diagnostics.Tracing.TraceEvent/3.1.24": {
+        "dependencies": {
+          "Microsoft.Diagnostics.NETCore.Client": "0.2.510501",
+          "Microsoft.Win32.Registry": "5.0.0",
+          "System.Collections.Immutable": "9.0.8",
+          "System.Reflection.Metadata": "9.0.8",
+          "System.Reflection.TypeExtensions": "4.7.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.1.2",
+          "System.Text.Json": "9.0.8"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dia2Lib.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          },
+          "lib/netstandard2.0/Microsoft.Diagnostics.FastSerialization.dll": {
+            "assemblyVersion": "3.1.24.0",
+            "fileVersion": "3.1.24.0"
+          },
+          "lib/netstandard2.0/Microsoft.Diagnostics.Tracing.TraceEvent.dll": {
+            "assemblyVersion": "3.1.24.0",
+            "fileVersion": "3.1.24.0"
+          },
+          "lib/netstandard2.0/TraceReloggerLib.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection/6.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.1.2"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging/6.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "6.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Options": "6.0.0",
+          "System.Diagnostics.DiagnosticSource": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Extensions.Logging.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "Microsoft.Extensions.Options/6.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Primitives": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Extensions.Options.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "Microsoft.Extensions.Primitives/6.0.0": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.1.2"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Primitives.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "Microsoft.NETCore.Platforms/5.0.0": {},
+      "Microsoft.Win32.Registry/5.0.0": {
+        "dependencies": {
+          "System.Security.AccessControl": "5.0.0",
+          "System.Security.Principal.Windows": "5.0.0"
+        }
+      },
+      "Microsoft.Windows.EventTracing.BootPrefetch/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.BootPrefetch.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Cpu/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Metadata": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10",
+          "System.Memory": "4.5.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Cpu.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Disk/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Cpu": "1.12.10",
+          "Microsoft.Windows.EventTracing.Metadata": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Disk.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Events/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Events.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.File/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.File.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Graphics/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Graphics.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.HyperV/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.HyperV.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Memory/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Metadata": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Memory.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Metadata/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Metadata.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Network/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Network.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Power/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Metadata": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Power.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Processes/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Processes.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Processing/1.12.10": {
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "System.Security.Principal.Windows": "5.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Processing.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Processing.All/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.BootPrefetch": "1.12.10",
+          "Microsoft.Windows.EventTracing.Cpu": "1.12.10",
+          "Microsoft.Windows.EventTracing.Disk": "1.12.10",
+          "Microsoft.Windows.EventTracing.Events": "1.12.10",
+          "Microsoft.Windows.EventTracing.File": "1.12.10",
+          "Microsoft.Windows.EventTracing.Graphics": "1.12.10",
+          "Microsoft.Windows.EventTracing.HyperV": "1.12.10",
+          "Microsoft.Windows.EventTracing.Memory": "1.12.10",
+          "Microsoft.Windows.EventTracing.Metadata": "1.12.10",
+          "Microsoft.Windows.EventTracing.Network": "1.12.10",
+          "Microsoft.Windows.EventTracing.Power": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing.Community": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing.OutputRedirection": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing.Toolkit": "1.11.0",
+          "Microsoft.Windows.EventTracing.Regions": "1.12.10",
+          "Microsoft.Windows.EventTracing.Registry": "1.12.10",
+          "Microsoft.Windows.EventTracing.ScheduledTasks": "1.12.10",
+          "Microsoft.Windows.EventTracing.Services": "1.12.10",
+          "Microsoft.Windows.EventTracing.Syscalls": "1.12.10",
+          "Microsoft.Windows.EventTracing.Utc": "1.12.10",
+          "Microsoft.Windows.EventTracing.WindowInFocus": "1.12.10"
+        }
+      },
+      "Microsoft.Windows.EventTracing.Processing.Community/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Processing.Community.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Processing.OutputRedirection/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Processing.OutputRedirection.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Processing.Toolkit/1.11.0": {},
+      "Microsoft.Windows.EventTracing.Regions/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Events": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Regions.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Registry/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Registry.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.ScheduledTasks/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.ScheduledTasks.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Services/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Metadata": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Services.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Syscalls/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Cpu": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Syscalls.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.Utc/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.Utc.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "Microsoft.Windows.EventTracing.WindowInFocus/1.12.10": {
+        "dependencies": {
+          "Microsoft.Windows.EventTracing.Processes": "1.12.10",
+          "Microsoft.Windows.EventTracing.Processing": "1.12.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Windows.EventTracing.WindowInFocus.dll": {
+            "assemblyVersion": "1.12.10.0",
+            "fileVersion": "1.12.10.51444"
+          }
+        }
+      },
+      "System.CodeDom/9.0.9": {
+        "runtime": {
+          "lib/net9.0/System.CodeDom.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.925.41916"
+          }
+        }
+      },
+      "System.Collections.Immutable/9.0.8": {},
+      "System.Diagnostics.DiagnosticSource/6.0.0": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.1.2"
+        }
+      },
+      "System.Management/9.0.9": {
+        "dependencies": {
+          "System.CodeDom": "9.0.9"
+        },
+        "runtime": {
+          "lib/net9.0/System.Management.dll": {
+            "assemblyVersion": "9.0.0.9",
+            "fileVersion": "9.0.925.41916"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net9.0/System.Management.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.9",
+            "fileVersion": "9.0.925.41916"
+          }
+        }
+      },
+      "System.Memory/4.5.3": {},
+      "System.Reflection.Metadata/9.0.8": {},
+      "System.Reflection.TypeExtensions/4.7.0": {},
+      "System.Runtime.CompilerServices.Unsafe/6.1.2": {},
+      "System.Security.AccessControl/5.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "5.0.0",
+          "System.Security.Principal.Windows": "5.0.0"
+        }
+      },
+      "System.Security.Principal.Windows/5.0.0": {},
+      "System.Text.Json/9.0.8": {}
+    }
+  },
+  "libraries": {
+    "config_ProcT/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Diagnostics.NETCore.Client/0.2.510501": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-juoqJYMDs+lRrrZyOkXXMImJHneCF23cuvO4waFRd2Ds7j+ZuGIPbJm0Y/zz34BdeaGiiwGWraMUlln05W1PCQ==",
+      "path": "microsoft.diagnostics.netcore.client/0.2.510501",
+      "hashPath": "microsoft.diagnostics.netcore.client.0.2.510501.nupkg.sha512"
+    },
+    "Microsoft.Diagnostics.Tracing.TraceEvent/3.1.24": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3AoQUx+TCTZ0jLE2BeOlW+rnhqA8247MU65yGV0psbxqK2JTiOTObFGh0PdtYkP22h7C2p95v+IIocOB9BDnzw==",
+      "path": "microsoft.diagnostics.tracing.traceevent/3.1.24",
+      "hashPath": "microsoft.diagnostics.tracing.traceevent.3.1.24.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-k6PWQMuoBDGGHOQTtyois2u4AwyVcIwL2LaSLlTZQm2CYcJ1pxbt6jfAnpWmzENA/wfrYRI/X9DTLoUkE4AsLw==",
+      "path": "microsoft.extensions.dependencyinjection/6.0.0",
+      "hashPath": "microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xlzi2IYREJH3/m6+lUrQlujzX8wDitm4QGnUu6kUXTQAWPuZY8i+ticFJbzfqaetLA6KR/rO6Ew/HuYD+bxifg==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/6.0.0",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eIbyj40QDg1NDz0HBW0S5f3wrLVnKWnDJ/JtZ+yJDFnDj90VoPuoPmFkeaXrtu+0cKm5GRAwoDf+dBWXK0TUdg==",
+      "path": "microsoft.extensions.logging/6.0.0",
+      "hashPath": "microsoft.extensions.logging.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/HggWBbTwy8TgebGSX5DBZ24ndhzi93sHUBDvP1IxbZD7FDokYzdAr6+vbWGjw2XAfR2EJ1sfKUotpjHnFWPxA==",
+      "path": "microsoft.extensions.logging.abstractions/6.0.0",
+      "hashPath": "microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Options/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dzXN0+V1AyjOe2xcJ86Qbo233KHuLEY0njf/P2Kw8SfJU+d45HNS2ctJdnEnrWbM9Ye2eFgaC5Mj9otRMU6IsQ==",
+      "path": "microsoft.extensions.options/6.0.0",
+      "hashPath": "microsoft.extensions.options.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Primitives/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9+PnzmQFfEFNR9J2aDTfJGGupShHjOuGw4VUv+JB044biSHrnmCIMD+mJHmb2H7YryrfBEXDurxQ47gJZdCKNQ==",
+      "path": "microsoft.extensions.primitives/6.0.0",
+      "hashPath": "microsoft.extensions.primitives.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.NETCore.Platforms/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VyPlqzH2wavqquTcYpkIIAQ6WdenuKoFN0BdYBbCWsclXacSOHNQn66Gt4z5NBqEYW0FAPm5rlvki9ZiCij5xQ==",
+      "path": "microsoft.netcore.platforms/5.0.0",
+      "hashPath": "microsoft.netcore.platforms.5.0.0.nupkg.sha512"
+    },
+    "Microsoft.Win32.Registry/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dDoKi0PnDz31yAyETfRntsLArTlVAVzUzCIvvEDsDsucrl33Dl8pIJG06ePTJTI3tGpeyHS9Cq7Foc/s4EeKcg==",
+      "path": "microsoft.win32.registry/5.0.0",
+      "hashPath": "microsoft.win32.registry.5.0.0.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.BootPrefetch/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DKUKeSHTKN4Yy0Hzhf3dsIBrVsK7XZBkEkLl6XtXQ0V3RMxbFw5PlaJbL5XQLmaHKhXuqyaNusaNJ/sq8UCJqg==",
+      "path": "microsoft.windows.eventtracing.bootprefetch/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.bootprefetch.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Cpu/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XImupM0xLKA7bgCjSzw7Qb34s/KghTcLiuQV9tEmFQNLkPZJoxIt6B0ojsuixN3LLt1PKkDNUtZQ0nlb03lYGA==",
+      "path": "microsoft.windows.eventtracing.cpu/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.cpu.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Disk/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7iypI2oJ0obrETiwICM5FazmTlns26D+5KAnqcyTjLST0YOvlEBODSHiCIcIhAr0kklvctgr8cYjlRrLDI1pmA==",
+      "path": "microsoft.windows.eventtracing.disk/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.disk.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Events/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0jIj9cLuMJdY44zxVDUJT3qRo0Ghu/Gm5sYROoRFX2vbVQpscKxL2zDbEXyXwyJKFWL4EeCgDv0v6d0U0D/S4w==",
+      "path": "microsoft.windows.eventtracing.events/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.events.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.File/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rl8GRCpnf13YwO5uSozDsPwqa2wRgVfHM2xi/jn79U0YBP6hCTSKyDsyTcEX3Q+yWAKSD6dzRJYcIfkwRXMBJg==",
+      "path": "microsoft.windows.eventtracing.file/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.file.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Graphics/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3r7R5HfenADaDm+eEXKFNsqyy5ILCgFMmBi/nHQjzwqKfb3wNPpEz6cMJCjtUX+4AwiQ593t6qoSad4S+BuUYw==",
+      "path": "microsoft.windows.eventtracing.graphics/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.graphics.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.HyperV/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U3SDFL95HZknvZef2xTyvVJ5S2/47xo8eQjKlrEAdPVYWLDpc+CX78kvxg+Zm13kYvTG6qEFeasoPo+lA1wVWw==",
+      "path": "microsoft.windows.eventtracing.hyperv/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.hyperv.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Memory/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dww1Ix4AtHnm+vpmzJ7fIBnJCP7dfDbxVN7OKeofn3uW6Jd6PHBNoPzCDlwM/KwX5IpH0OuH1+WKIYeZXCmFgQ==",
+      "path": "microsoft.windows.eventtracing.memory/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.memory.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Metadata/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xSWE1HxljjlI4sdC09k2NOXNX6pdwcNx76rDEHuXyfTTrKuTIxpHia7k8lRcenPy8dRz2/eY+ZLK6gcYLwEiIQ==",
+      "path": "microsoft.windows.eventtracing.metadata/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.metadata.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Network/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YY1x20EeTknTU1UEF4hac1A01n+dpvvkF1dGOdHOfi5rkF79c07nHm/lSVBTMGEbWXdbEszV7X3Fl8Z5GfYHbw==",
+      "path": "microsoft.windows.eventtracing.network/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.network.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Power/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fDeBCUljhgEYZuiSh8Pf68pOoRUcSbzWQZWOp0KL6s38I5b5ytaQ/27Zw5niJ9h1gv+KGuCz0A8lx33BEUGlUw==",
+      "path": "microsoft.windows.eventtracing.power/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.power.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Processes/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-p2vZBrcZSoXDHAuwbx6f18wTrBxfB4sQ1dbov+DadrdM3Me0hGfVgrXtIiJLU6eyhQh9B5nuMLmTwddLSPi0CA==",
+      "path": "microsoft.windows.eventtracing.processes/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.processes.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Processing/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wXEVCFySPKQLFPJiJWY09lBVNmM+PUTqTCZWLi34FPVrHV61XI1pw91TJzUib25vj7QbagqTAqZsovtRAwNjCg==",
+      "path": "microsoft.windows.eventtracing.processing/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.processing.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Processing.All/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-agwGyKvZbCkCpYdWRj/GycuJLyvUwgpMNuUQv/ZsN/F+Vd31b+t4nxS0q7SHUBbbDfQ4/Py+yHeq/gVDQJqRcA==",
+      "path": "microsoft.windows.eventtracing.processing.all/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.processing.all.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Processing.Community/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0J3YH2hDDxfPnR8Q4ULodl8yHvk76fQWHzHHipTZQjSMnSB7+KPV/i+qqzjtINeedxXK595RVsVFuwWikGAujQ==",
+      "path": "microsoft.windows.eventtracing.processing.community/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.processing.community.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Processing.OutputRedirection/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nqzw+jVhY5ezI5099WD4jCqDTqMGmIViePBABqqZOX4P65jquRWkz2CZ4xOnGeA2vprrSYCpxC2LZPJ5PCGhog==",
+      "path": "microsoft.windows.eventtracing.processing.outputredirection/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.processing.outputredirection.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Processing.Toolkit/1.11.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I3AdOlbTG1E1/VlYPVlaxsuFstln6v3AM7miVXqjKLfl1vPbFnTqyGADD8mGRKIH/0VUYGtvrqeX33dn74P6Ww==",
+      "path": "microsoft.windows.eventtracing.processing.toolkit/1.11.0",
+      "hashPath": "microsoft.windows.eventtracing.processing.toolkit.1.11.0.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Regions/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dJXOT9xH3kbBf+Vye08ouEuljBLC9kXZUDVVk2eCGQLfiHKcMtjqWy6QDEH20iYfzQ25UnZfH1VMQxPCErqoNg==",
+      "path": "microsoft.windows.eventtracing.regions/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.regions.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Registry/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZQG7ITJeC+/ue+YWg2/0Jxzhb5tVa3ah7rN9/zTbsiC1n9qHdn9hYJu0WYhEcB6dJRMtH+D7GIb6V9BVtzVBJQ==",
+      "path": "microsoft.windows.eventtracing.registry/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.registry.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.ScheduledTasks/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8DbP+QawBrT6tsVvrnoRafAN62lDj3wwBEQsTTRY0agDhHwRc1GsPsHZhSxIHnDzz+haO9mOlNMDxm+M6Wug0w==",
+      "path": "microsoft.windows.eventtracing.scheduledtasks/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.scheduledtasks.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Services/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ySNK8Sj/HSqybL5dXOBdGYv7ZOvZIlS8CuaDhmd56WwAm7ZDPDZlmYYsauZeSQERshVjSHAM9rCpjgF39oZLSw==",
+      "path": "microsoft.windows.eventtracing.services/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.services.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Syscalls/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZUWFUAvqiX/CQtCT+PGcg5pQIjiwfypfF6OlBRI438tBigqSK/i0laRa0tz1PUlZh/eirrpkwPiAZrbnfcIunQ==",
+      "path": "microsoft.windows.eventtracing.syscalls/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.syscalls.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.Utc/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-k3NnhQD1XSS483n55Iz8szwiE+yqWq/CvI8OQY4MPDS+Iaxcs5iA18lZhfgYPOn5MdwzFmiXK+avAsXV8UY+3A==",
+      "path": "microsoft.windows.eventtracing.utc/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.utc.1.12.10.nupkg.sha512"
+    },
+    "Microsoft.Windows.EventTracing.WindowInFocus/1.12.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ORnao3ZPcchTcvlOsRAKzfRE+g6hzSKWO2yHfHOhJ4/yZBiAF9Q6S1pQhKY7D2AuVmgm2H7rBvSacFgQQBXkSQ==",
+      "path": "microsoft.windows.eventtracing.windowinfocus/1.12.10",
+      "hashPath": "microsoft.windows.eventtracing.windowinfocus.1.12.10.nupkg.sha512"
+    },
+    "System.CodeDom/9.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Az4ngSi0MO3Qwu1+BJRHnc2C8e7+x0oXj+Q++C/wru0vM8J2oL3QlliiZPdwPnR0VbiL0lH7izSIGQssMaRiGQ==",
+      "path": "system.codedom/9.0.9",
+      "hashPath": "system.codedom.9.0.9.nupkg.sha512"
+    },
+    "System.Collections.Immutable/9.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Eje6exD7AGKPg5SIkmjyWTBq0KK6SpfTBfdFUmpGG07mNbYimFJ+jyVnILcs0ikFOXoYTBpBOxKYgAk2hhjYOw==",
+      "path": "system.collections.immutable/9.0.8",
+      "hashPath": "system.collections.immutable.9.0.8.nupkg.sha512"
+    },
+    "System.Diagnostics.DiagnosticSource/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-frQDfv0rl209cKm1lnwTgFPzNigy2EKk1BS3uAvHvlBVKe5cymGyHO+Sj+NLv5VF/AhHsqPIUUwya5oV4CHMUw==",
+      "path": "system.diagnostics.diagnosticsource/6.0.0",
+      "hashPath": "system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512"
+    },
+    "System.Management/9.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U+OnvxuFi/V0++P98Auba1pAyaOXU5EioSz0xczgFsB7l/sPX9Ix4rWwI+lXJG4/icPieeRsfpXPEIcSBTQShw==",
+      "path": "system.management/9.0.9",
+      "hashPath": "system.management.9.0.9.nupkg.sha512"
+    },
+    "System.Memory/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "path": "system.memory/4.5.3",
+      "hashPath": "system.memory.4.5.3.nupkg.sha512"
+    },
+    "System.Reflection.Metadata/9.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oJQezcASFomKvSp+06pzvSFRTnzdUJtiO19peAdZ9RwiqZinBV56u7zW5fEGf2/VrQFL3qZSV7UapgG31XRWQA==",
+      "path": "system.reflection.metadata/9.0.8",
+      "hashPath": "system.reflection.metadata.9.0.8.nupkg.sha512"
+    },
+    "System.Reflection.TypeExtensions/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VybpaOQQhqE6siHppMktjfGBw1GCwvCqiufqmP8F1nj7fTUNtW35LOEt3UZTEsECfo+ELAl/9o9nJx3U91i7vA==",
+      "path": "system.reflection.typeextensions/4.7.0",
+      "hashPath": "system.reflection.typeextensions.4.7.0.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/6.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2hBr6zdbIBTDE3EhK7NSVNdX58uTK6iHW/P/Axmm9sl1xoGSLqDvMtpecn226TNwHByFokYwJmt/aQQNlO5CRw==",
+      "path": "system.runtime.compilerservices.unsafe/6.1.2",
+      "hashPath": "system.runtime.compilerservices.unsafe.6.1.2.nupkg.sha512"
+    },
+    "System.Security.AccessControl/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dagJ1mHZO3Ani8GH0PHpPEe/oYO+rVdbQjvjJkBRNQkX4t0r1iaeGn8+/ybkSLEan3/slM0t59SVdHzuHf2jmw==",
+      "path": "system.security.accesscontrol/5.0.0",
+      "hashPath": "system.security.accesscontrol.5.0.0.nupkg.sha512"
+    },
+    "System.Security.Principal.Windows/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t0MGLukB5WAVU9bO3MGzvlGnyJPgUlcwerXn1kzBRjwLKixT96XV0Uza41W49gVd8zEMFu9vQEFlv0IOrytICA==",
+      "path": "system.security.principal.windows/5.0.0",
+      "hashPath": "system.security.principal.windows.5.0.0.nupkg.sha512"
+    },
+    "System.Text.Json/9.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mIQir9jBqk0V7X0Nw5hzPJZC8DuGdf+2DS3jAVsr6rq5+/VyH5rza0XGcONJUWBrZ+G6BCwNyjWYd9lncBu48A==",
+      "path": "system.text.json/9.0.8",
+      "hashPath": "system.text.json.9.0.8.nupkg.sha512"
+    }
+  }
+}
