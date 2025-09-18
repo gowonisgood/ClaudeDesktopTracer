@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("config_ProcT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1c1ead7b5cc3559a4cf7f5c00d5e47da78e0324")]
 [assembly: System.Reflection.AssemblyProductAttribute("config_ProcT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("config_ProcT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

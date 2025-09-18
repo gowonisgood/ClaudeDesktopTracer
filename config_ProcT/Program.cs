@@ -86,16 +86,15 @@ class Program
         McpServer? mcpServer = JsonSerializer.Deserialize<McpServer>(jsonConfig);
         foreach (var server in mcpServer?.McpServers ?? new Dictionary<string, commandArgsEnv>())
         {
-            foreach (string arg in server.Value?.args ?? Array.Empty<string>()) //??의 의미는 null일경우 오른쪽 사용
+
+            if (server.Value.command.Contains(".exe"))
             {
-                if (arg.Contains(".exe"))
-                {
-                    exeDic[server.Key] = arg;
-                    continue;
-                }
-                runtimeDic[server.Key] = arg+".exe";
+                exeDic[server.Key] = server.Value.command;
+                continue;
             }
-            
+            runtimeDic[server.Key] = server.Value.command + ".exe";
+            Console.WriteLine(runtimeDic[server.Key]);
+
         }
 #endif
 
@@ -108,6 +107,7 @@ class Program
         ConcurrentDictionary<int, (int? ppid, DateTime start, DateTime stop)> Dead = new();
 
         //2. Seed , 현재 떠 있는 대상 프로세스 미리 등록
+        //TODO : 현재 떠 있는 Local MCP Server도 등록 해야함, 지금은 claude.exe 떠있는 것만 등록 됨
         foreach (var p in Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(targetProcName)))
         {
             Live[p.Id] = (GetPPid(p.Id), DateTime.Now);
@@ -129,16 +129,52 @@ class Program
         source.Kernel.ProcessStart += e =>
         {
             var pName = e.ImageFileName ?? string.Empty;
-            if (!pName.Equals(targetProcName)) return;
-            
-            var pid = e.ProcessID;
-            var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
+            if (pName.Equals(targetProcName))
+            {
 
-            Live[pid] = (ppid, e.TimeStamp.ToLocalTime());
+                var pid = e.ProcessID;
+                var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
 
-            //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff}");
-            Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
-                  $"cmd={(e.CommandLine ?? "(no cmd)")}"); //해당 프로세스가 실행되게 된 commandline
+                Live[pid] = (ppid, e.TimeStamp.ToLocalTime());
+
+                Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff}");
+                //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
+                //      $"cmd={(e.CommandLine ?? "(no cmd)")}"); //해당 프로세스가 실행되게 된 commandline
+            }
+
+
+            //runtime의 ppid가 cladue의 pid  인경우
+
+            foreach (var li in Live)
+            {
+                if (e.ParentID == li.Key)
+                {
+                    foreach (string runtime in runtimeDic.Values)
+                    {
+                        //TODO : 어떤 서버 실행 하는지도 구별 기능 필요. 지금은 그냥 claude의 자식인 uv.exe면 무조건 프로세스 출력하게 해둠. (uv.exe로 실행하는게 하나가 아닐 수도 있음)
+                        if (pName.Equals(runtime))
+                        {
+                            var pid = e.ProcessID;
+                            var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
+                            Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
+                  $"cmd={(e.CommandLine ?? "(no cmd)")}");
+                            continue;
+                        }
+                    }
+                    foreach (string exe in exeDic.Values)
+                    {
+                        if (exe.Contains(pName))
+                        {
+                            var pid = e.ProcessID;
+                            var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
+                            Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
+                                $"cmd={(e.CommandLine ?? "(no cmd)")}");
+                            continue;
+                        }
+                    }
+
+                }
+            }
         };
 
         //이벤트 핸들러 등록 (프로세스 종료)

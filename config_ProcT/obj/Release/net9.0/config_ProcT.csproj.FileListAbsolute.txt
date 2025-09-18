@@ -221,3 +221,4 @@ D:\GIT\config_procT\config_ProcT\bin\Release\net9.0\System.Management.dll
 D:\GIT\config_procT\config_ProcT\bin\Release\net9.0\runtimes\win\lib\net9.0\System.Management.dll
 D:\GIT\config_procT\config_ProcT\obj\Release\net9.0\config_ProcT.csproj.AssemblyReference.cache
 D:\GIT\config_procT\config_ProcT\obj\Release\net9.0\config_P.09AA07E3.Up2Date
+D:\GIT\config_procT\config_ProcT\obj\Release\net9.0\config_ProcT.sourcelink.json
