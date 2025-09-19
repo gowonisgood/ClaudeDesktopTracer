@@ -17,6 +17,9 @@ using System.Linq;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+using System.Security.Permissions;
+using System.Security.Principal;
+
 
 /* config 파일을 파싱하기 위한 class*/
 public class McpServer
@@ -53,8 +56,23 @@ class Program
         }
     }
 
+    /* 관리자 권한 체크 함수 */
+    static bool IsAdministrator()
+    {
+        using WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+        var principal = new System.Security.Principal.WindowsPrincipal(identity);
+        return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+    }
+
     static void Main(string[] args)
     {
+        /* 관리자 권한 체크 */
+        if (!IsAdministrator())
+        {
+            Console.WriteLine("Administrator privileges are required to run this program.");
+            return;
+        }
+
         /* claude desktop config 파일 파싱 */
         //TODO: 지금은 하드 코딩이지만 사용자 별로 경로를 자동으로 찾는 기능 구현 필요
         StreamReader sr = new StreamReader("C:\\Users\\gowon\\AppData\\Roaming\\Claude\\claude_desktop_config.json");
@@ -116,7 +134,7 @@ class Program
 
         //3. ETW 세션 시작 및 이벤트 핸들러 등록
 
-        //TODO : 관리자 권한이 아닐 경우 예외처리 필요
+        
         using var session = new TraceEventSession(sessionName);
         
         //커널 프로세스 이벤트 활성화 (어떤 공급자를 활성화 시킬지 지정)
@@ -137,7 +155,7 @@ class Program
 
                 Live[pid] = (ppid, e.TimeStamp.ToLocalTime());
 
-                Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff}");
+                //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff}");
                 //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
                 //      $"cmd={(e.CommandLine ?? "(no cmd)")}"); //해당 프로세스가 실행되게 된 commandline
             }
@@ -184,7 +202,7 @@ class Program
             if (Live.TryRemove(pid, out var dpid))
             {
                 Dead[pid] = (dpid.ppid, dpid.start, e.TimeStamp.ToLocalTime());
-                Console.WriteLine($"[Stop ]  pid={pid,-6} lived={(e.TimeStamp - dpid.start).TotalSeconds,6:F1}s");
+                //Console.WriteLine($"[Stop ]  pid={pid,-6} lived={(e.TimeStamp - dpid.start).TotalSeconds,6:F1}s");
             }
         };
 
