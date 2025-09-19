@@ -1,24 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-using Microsoft.Diagnostics.Tracing;
+﻿using Microsoft.Diagnostics.Tracing;
+using Microsoft.Diagnostics.Tracing.AutomatedAnalysis;
 using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing.Session;
-
-using System.Management;
-
-
+using Microsoft.Windows.EventTracing.Processes;
+using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
+using System.Management;
 using System.Security.Permissions;
 using System.Security.Principal;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 /* config 파일을 파싱하기 위한 class*/
@@ -74,6 +69,29 @@ class Program
             return string.Empty;
         }
         return string.Empty;
+    }
+
+    /* 재귀적으로 하위 프로세스 찾는 함수 */
+    //#TODO : 성능 최적화 필요
+    static void FindAndRegisterSubprocesses(int parentPid, string serverName, ConcurrentDictionary<int, (string serverName, int? ppid, DateTime start)> localSLive)
+    {
+        foreach (var p in System.Diagnostics.Process.GetProcesses())
+        {
+            try
+            {
+                int? ppid = GetPPid(p.Id);
+                if (ppid == parentPid && !localSLive.ContainsKey(p.Id))
+                {
+                    localSLive[p.Id] = (serverName, ppid, DateTime.Now);
+                    Console.WriteLine($"[Seed] Subprocess of {serverName}: PID: {p.Id}, PPID: {ppid}");
+                    FindAndRegisterSubprocesses(p.Id, serverName, localSLive);
+                }
+            }
+            catch
+            {
+                Console.WriteLine($"[Error] 접근 실패");
+            }
+        }
     }
 
     /* 관리자 권한 체크 함수 */
@@ -181,11 +199,11 @@ class Program
         /* Local MCP Server process 추적  dictionary */
         ConcurrentDictionary<int, (string serverName,int? ppid, DateTime start)> LocalSLive = new();
         ConcurrentDictionary<int, (string serverName, int? ppid, DateTime start)> LocalSDead = new();
-        //#TODO : Local MCP Server의 하위 프로세스 추적 기능 추가 
+    
 
         //2. Seed , 현재 떠 있는 대상 프로세스 미리 등록
         //MCP Client 프로세스
-        foreach (var p in Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(targetProcName)))
+        foreach (var p in System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(targetProcName)))
         {
             McpClientLive[p.Id] = (GetPPid(p.Id), DateTime.Now);
             Console.WriteLine($"[Seed] PID: {p.Id}, PPID: {McpClientLive[p.Id].ppid}");
@@ -194,7 +212,7 @@ class Program
         //Local MCP Server 프로세스 (runtime)
         foreach (var runtimeServer in runtimeDic)
         {
-            var processes = Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(runtimeServer.Value.command));
+            var processes = System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(runtimeServer.Value.command));
             foreach (var p in processes)
             {
                 string commandLine = GetCommandLine(p.Id);
@@ -211,7 +229,7 @@ class Program
         foreach (var exeServer in exeDic)
         {
             var processName = System.IO.Path.GetFileNameWithoutExtension(exeServer.Value.command);
-            var processes = Process.GetProcessesByName(processName);
+            var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             foreach (var p in processes)
             {
                 string commandLine = GetCommandLine(p.Id);
@@ -221,6 +239,11 @@ class Program
                     Console.WriteLine($"[Seed] Server: {exeServer.Key} PID: {p.Id}, PPID: {LocalSLive[p.Id].ppid}");
                 }
             }
+        }
+
+        foreach(var (pid, serverInfo) in LocalSLive.ToList())
+        {
+            FindAndRegisterSubprocesses(pid, serverInfo.serverName, LocalSLive);
         }
 
         //3. ETW 세션 시작 및 이벤트 핸들러 등록
@@ -236,14 +259,12 @@ class Program
         source.Kernel.ProcessStart += e =>
         {
             var pName = e.ImageFileName ?? string.Empty;
+            var pid = e.ProcessID;
+            var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
             if (pName.Equals(targetProcName))
             {
-
-                var pid = e.ProcessID;
-                var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
-
                 McpClientLive[pid] = (ppid, e.TimeStamp.ToLocalTime());
-
+                return;
                 //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff}");
                 //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
                 //      $"cmd={(e.CommandLine ?? "(no cmd)")}"); //해당 프로세스가 실행되게 된 commandline
@@ -260,8 +281,6 @@ class Program
                     {
                         if (pName.Equals(runtimeServer.Value.command))
                         {
-                            var pid = e.ProcessID;
-                            var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
                             string commandLine = e.CommandLine ?? "(no cmd)";
 
 
@@ -271,7 +290,7 @@ class Program
                             Console.WriteLine($"[Start] Server: {identifiedServer}  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
                   $"cmd={commandLine}");
                             LocalSLive[pid] = (identifiedServer, ppid, e.TimeStamp.ToLocalTime());
-                            continue;
+                            continue; //TODO: 여기 return 인가?
                         }
                     }
 
@@ -279,8 +298,6 @@ class Program
                     {
                         if (exeServer.Value.command.Contains(pName))
                         {
-                            var pid = e.ProcessID;
-                            var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
                             string commandLine = e.CommandLine ?? "(no cmd)";
 
                             // commandLine 에서 서버 식별
@@ -292,11 +309,21 @@ class Program
                   $"cmd={commandLine}");
                             LocalSLive[pid] = (identifiedServer, ppid, e.TimeStamp.ToLocalTime());
 
-                            continue;
+                            continue; //TODO: 여기 return 인가?
                         }
                     }
 
                 }
+            }
+
+            //Local MCP Server의 하위 프로세스 재귀적으로 탐지
+            if(ppid.HasValue && LocalSLive.ContainsKey(ppid.Value))
+            {
+              var parentServerInfo = LocalSLive[ppid.Value];
+                Console.WriteLine($"[Subprocess] Parent Server: {parentServerInfo.serverName}  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
+                  $"cmd={(e.CommandLine ?? "(no cmd)")}");
+
+                LocalSLive[pid] = (parentServerInfo.serverName, ppid, e.TimeStamp.ToLocalTime());
             }
         };
 
