@@ -64,6 +64,36 @@ class Program
         return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
     }
 
+    /* 런타임 실행 경우 : CommandLine에서 Server Name 추출 함수  */
+    static string IdentifyServerFromCommandLine(string commandLine, ConcurrentDictionary<string, (string command, List<string> args)> serverDic)
+    {
+        if (string.IsNullOrEmpty(commandLine)) return "Unknown";
+
+        foreach (var server in serverDic)
+        {
+            bool allArgsMatch = true;
+
+            foreach (var arg in server.Value.args)
+            {
+                if (string.IsNullOrEmpty(arg)) continue;
+
+                if (!commandLine.Contains(arg))
+                {
+                    allArgsMatch = false;
+                    break;
+                }
+            }
+
+            //모든 args가 매칭 되면 해당 서버로 식별
+            if (allArgsMatch && server.Value.args.Count > 0)
+            {
+                return server.Key;
+            }
+        }
+        return "Unknown";
+    }
+
+
     static void Main(string[] args)
     {
         /* 관리자 권한 체크 */
@@ -98,19 +128,23 @@ class Program
         }
 #endif
 #if RELEASE
-        ConcurrentDictionary<string, string> exeDic = new();
-        ConcurrentDictionary<string, string> runtimeDic = new();
+        /* Key: 서버 이름, Value: 어떤 걸로 실행 , args */
+        ConcurrentDictionary<string, (string command, List<string> args)> exeDic = new();
+        ConcurrentDictionary<string, (string command, List<string> args)> runtimeDic = new();
 
         McpServer? mcpServer = JsonSerializer.Deserialize<McpServer>(jsonConfig);
         foreach (var server in mcpServer?.McpServers ?? new Dictionary<string, commandArgsEnv>())
         {
+            var arg = server.Value?.args?.ToList() ?? new List<string>();
 
+            /* .exe로 직접 실행하는 서버 */
             if (server.Value.command.Contains(".exe"))
             {
-                exeDic[server.Key] = server.Value.command;
+                exeDic[server.Key] = (server.Value.command, arg);
                 continue;
             }
-            runtimeDic[server.Key] = server.Value.command + ".exe";
+            /* 런타임으로 실행되는 서버 */
+            runtimeDic[server.Key] = (server.Value.command + ".exe", arg);
             Console.WriteLine(runtimeDic[server.Key]);
 
         }
@@ -120,21 +154,25 @@ class Program
 
         // 1. 변수 선언
         const string sessionName = "MCPServerSession";
-        const string targetProcName = "claude.exe"; //TODO : 하드코딩 이지만 추후 변경 필요
-        ConcurrentDictionary<int, (int? ppid, DateTime start)> Live = new();
-        ConcurrentDictionary<int, (int? ppid, DateTime start, DateTime stop)> Dead = new();
+        const string targetProcName = "claude.exe"; //TODO : 하드코딩 이지만 추후 변경 필요 (입력으로 받는다던지)
+        /* MCP client process 추적 dictionary */
+        ConcurrentDictionary<int, (int? ppid, DateTime start)> McpClientLive = new();
+        ConcurrentDictionary<int, (int? ppid, DateTime start, DateTime stop)> McpClientDead = new();
+        /* Local MCP Server process 추적  dictionary */
+        ConcurrentDictionary<int, (string serverName,int? ppid, DateTime start)> LocalSLive = new();
+        ConcurrentDictionary<int, (string serverName, int? ppid, DateTime start)> LocalSDead = new();
 
         //2. Seed , 현재 떠 있는 대상 프로세스 미리 등록
         //TODO : 현재 떠 있는 Local MCP Server도 등록 해야함, 지금은 claude.exe 떠있는 것만 등록 됨
         foreach (var p in Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(targetProcName)))
         {
-            Live[p.Id] = (GetPPid(p.Id), DateTime.Now);
-            Console.WriteLine($"[Seed] PID: {p.Id}, PPID: {Live[p.Id].ppid}");
+            McpClientLive[p.Id] = (GetPPid(p.Id), DateTime.Now);
+            Console.WriteLine($"[Seed] PID: {p.Id}, PPID: {McpClientLive[p.Id].ppid}");
         }
 
-        //3. ETW 세션 시작 및 이벤트 핸들러 등록
+        //foreach (var p in )
 
-        
+        //3. ETW 세션 시작 및 이벤트 핸들러 등록
         using var session = new TraceEventSession(sessionName);
         
         //커널 프로세스 이벤트 활성화 (어떤 공급자를 활성화 시킬지 지정)
@@ -153,7 +191,7 @@ class Program
                 var pid = e.ProcessID;
                 var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
 
-                Live[pid] = (ppid, e.TimeStamp.ToLocalTime());
+                McpClientLive[pid] = (ppid, e.TimeStamp.ToLocalTime());
 
                 //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff}");
                 //Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
@@ -163,30 +201,46 @@ class Program
 
             //runtime의 ppid가 cladue의 pid  인경우
 
-            foreach (var li in Live)
+            foreach (var McpClient in McpClientLive)
             {
-                if (e.ParentID == li.Key)
+                if (e.ParentID == McpClient.Key)
                 {
-                    foreach (string runtime in runtimeDic.Values)
+                    foreach (var runtimeServer in runtimeDic)
                     {
-                        //TODO : 어떤 서버 실행 하는지도 구별 기능 필요. 지금은 그냥 claude의 자식인 uv.exe면 무조건 프로세스 출력하게 해둠. (uv.exe로 실행하는게 하나가 아닐 수도 있음)
-                        if (pName.Equals(runtime))
+                        if (pName.Equals(runtimeServer.Value.command))
                         {
                             var pid = e.ProcessID;
                             var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
-                            Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
-                  $"cmd={(e.CommandLine ?? "(no cmd)")}");
+                            string commandLine = e.CommandLine ?? "(no cmd)";
+
+
+                            // commandLine 에서 서버 식별
+                            string identifiedServer = IdentifyServerFromCommandLine(commandLine, runtimeDic);
+
+                            Console.WriteLine($"[Start] Server: {identifiedServer}  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
+                  $"cmd={commandLine}");
+                            LocalSLive[pid] = (identifiedServer, ppid, e.TimeStamp.ToLocalTime());
                             continue;
                         }
                     }
-                    foreach (string exe in exeDic.Values)
+
+                    foreach (var exeServer in exeDic)
                     {
-                        if (exe.Contains(pName))
+                        if (exeServer.Value.command.Contains(pName))
                         {
                             var pid = e.ProcessID;
                             var ppid = e.ParentID == 0 ? (int?)null : e.ParentID;
-                            Console.WriteLine($"[Start]  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
-                                $"cmd={(e.CommandLine ?? "(no cmd)")}");
+                            string commandLine = e.CommandLine ?? "(no cmd)";
+
+                            // commandLine 에서 서버 식별
+                            string identifiedServer = "Unknown";
+                            if (commandLine.Equals(exeServer.Value.command)) identifiedServer = exeServer.Key;
+                            
+
+                            Console.WriteLine($"[Start] Server: {identifiedServer}  pid={pid,-6} ppid={ppid,-6} time={e.TimeStamp:yyyy-MM-dd HH:mm:ss.fff} " +
+                  $"cmd={commandLine}");
+                            LocalSLive[pid] = (identifiedServer, ppid, e.TimeStamp.ToLocalTime());
+
                             continue;
                         }
                     }
@@ -199,9 +253,9 @@ class Program
         source.Kernel.ProcessStop += e =>
         {
             var pid = e.ProcessID;
-            if (Live.TryRemove(pid, out var dpid))
+            if (McpClientLive.TryRemove(pid, out var dpid))
             {
-                Dead[pid] = (dpid.ppid, dpid.start, e.TimeStamp.ToLocalTime());
+                McpClientDead[pid] = (dpid.ppid, dpid.start, e.TimeStamp.ToLocalTime());
                 //Console.WriteLine($"[Stop ]  pid={pid,-6} lived={(e.TimeStamp - dpid.start).TotalSeconds,6:F1}s");
             }
         };
