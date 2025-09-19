@@ -56,6 +56,26 @@ class Program
         }
     }
 
+    /* commandline을 구하는 함수 , 원래 떠있던 프로세스의 commandline을 얻기 위함 */
+    static string GetCommandLine(int pid)
+    {
+        try
+        {
+            using var q = new ManagementObjectSearcher(
+                $"SELECT CommandLine FROM Win32_Process WHERE ProcessId = {pid}");
+
+            foreach (ManagementObject obj in q.Get())
+            {
+                return obj["CommandLine"]?.ToString() ?? string.Empty;
+            }
+        }
+        catch
+        {
+            return string.Empty;
+        }
+        return string.Empty;
+    }
+
     /* 관리자 권한 체크 함수 */
     static bool IsAdministrator()
     {
@@ -161,16 +181,47 @@ class Program
         /* Local MCP Server process 추적  dictionary */
         ConcurrentDictionary<int, (string serverName,int? ppid, DateTime start)> LocalSLive = new();
         ConcurrentDictionary<int, (string serverName, int? ppid, DateTime start)> LocalSDead = new();
+        //#TODO : Local MCP Server의 하위 프로세스 추적 기능 추가 
 
         //2. Seed , 현재 떠 있는 대상 프로세스 미리 등록
-        //TODO : 현재 떠 있는 Local MCP Server도 등록 해야함, 지금은 claude.exe 떠있는 것만 등록 됨
+        //MCP Client 프로세스
         foreach (var p in Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(targetProcName)))
         {
             McpClientLive[p.Id] = (GetPPid(p.Id), DateTime.Now);
             Console.WriteLine($"[Seed] PID: {p.Id}, PPID: {McpClientLive[p.Id].ppid}");
         }
 
-        //foreach (var p in )
+        //Local MCP Server 프로세스 (runtime)
+        foreach (var runtimeServer in runtimeDic)
+        {
+            var processes = Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(runtimeServer.Value.command));
+            foreach (var p in processes)
+            {
+                string commandLine = GetCommandLine(p.Id);
+                string identifiedServer = IdentifyServerFromCommandLine(commandLine, runtimeDic);
+                if (identifiedServer != "Unknown")
+                {
+                    LocalSLive[p.Id] = (identifiedServer, GetPPid(p.Id), DateTime.Now);
+                    Console.WriteLine($"[Seed] Server: {identifiedServer} PID: {p.Id}, PPID: {LocalSLive[p.Id].ppid}");
+                }
+            }
+        }
+
+        //Local MCP Server 프로세스 (exe)
+        foreach (var exeServer in exeDic)
+        {
+            var processName = System.IO.Path.GetFileNameWithoutExtension(exeServer.Value.command);
+            var processes = Process.GetProcessesByName(processName);
+            foreach (var p in processes)
+            {
+                string commandLine = GetCommandLine(p.Id);
+                if (commandLine.Contains(exeServer.Value.command))
+                {
+                    LocalSLive[p.Id] = (exeServer.Key, GetPPid(p.Id), DateTime.Now);
+                    Console.WriteLine($"[Seed] Server: {exeServer.Key} PID: {p.Id}, PPID: {LocalSLive[p.Id].ppid}");
+                }
+            }
+        }
 
         //3. ETW 세션 시작 및 이벤트 핸들러 등록
         using var session = new TraceEventSession(sessionName);
@@ -253,14 +304,18 @@ class Program
         source.Kernel.ProcessStop += e =>
         {
             var pid = e.ProcessID;
-            if (McpClientLive.TryRemove(pid, out var dpid))
+            if (McpClientLive.TryRemove(pid, out var McpClientInfo))
             {
-                McpClientDead[pid] = (dpid.ppid, dpid.start, e.TimeStamp.ToLocalTime());
+                McpClientDead[pid] = (McpClientInfo.ppid, McpClientInfo.start, e.TimeStamp.ToLocalTime());
                 //Console.WriteLine($"[Stop ]  pid={pid,-6} lived={(e.TimeStamp - dpid.start).TotalSeconds,6:F1}s");
             }
+            else if (LocalSLive.TryRemove(pid, out var serverInfo))
+            {
+                LocalSDead[pid] = (serverInfo.serverName, serverInfo.ppid, serverInfo.start);
+                Console.WriteLine($"[Stop ] Server: {serverInfo.serverName}  pid={pid,-6} ppid={serverInfo.ppid,-6} " +
+                    $"lived={(e.TimeStamp - serverInfo.start).TotalSeconds,6:F1}s");
+            }
         };
-
-
 
 
         source.Process();
